@@ -25,6 +25,43 @@ paths:
                   $ref: '#/components/schemas/country'
       operationId: get-countries
       description: Get a list of countries available
+  /register:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/register'
+  /subscriptions:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+      operationId: get-subscriptions
+  /account:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+      operationId: get-account
 components:
   schemas:
     country:
@@ -76,6 +113,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/server'
+    register:
+      title: register
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    subscription:
+      title: subscription
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        price:
+          type: string
+        oldPrice:
+          type: string
+        description:
+          type: string
+    account:
+      title: account
+      type: object
+      properties:
+        subscribed:
+          type: boolean
   securitySchemes:
     oauth:
       type: oauth2
