@@ -25,29 +25,6 @@ paths:
                   $ref: '#/components/schemas/country'
       operationId: get-countries
       description: Get a list of countries available
-  '/countries/{id}/servers':
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        description: The country ID
-        required: true
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/server'
-      operationId: get-countries-id-servers
-      description: A list of servers available for this country
-      parameters: []
 components:
   schemas:
     country:
@@ -64,6 +41,10 @@ components:
           type: string
         icon:
           type: string
+        cities:
+          type: array
+          items:
+            $ref: '#/components/schemas/city'
     server:
       title: server
       type: object
@@ -83,6 +64,18 @@ components:
           enum:
             - ipsec
             - openvpn
+    city:
+      title: city
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        servers:
+          type: array
+          items:
+            $ref: '#/components/schemas/server'
   securitySchemes:
     oauth:
       type: oauth2
