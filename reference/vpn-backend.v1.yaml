@@ -35,6 +35,11 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
       operationId: registerPost
       requestBody:
         content:
@@ -42,7 +47,7 @@ paths:
             schema:
               $ref: '#/components/schemas/register'
       security: []
-      description: ''
+      description: get account''
   /subscriptions:
     get:
       x-eov-operation-handler: accountRoute
