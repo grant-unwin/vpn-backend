@@ -11,6 +11,7 @@ servers:
 paths:
   /countries:
     get:
+      x-eov-operation-handler: countriesRoute
       summary: Your GET endpoint
       tags:
         - country
@@ -23,17 +24,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/country'
-      operationId: get-countries
+      operationId: countriesGet
       description: Get a list of countries available
       security: []
   /register:
     get:
+      x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
       tags: []
       responses:
         '200':
           description: OK
-      operationId: get-register
+      operationId: registerPost
       requestBody:
         content:
           application/json:
@@ -43,6 +45,7 @@ paths:
       description: ''
   /subscriptions:
     get:
+      x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
       tags: []
       responses:
@@ -56,9 +59,11 @@ paths:
                   $ref: '#/components/schemas/subscription'
         '401':
           description: Unauthorized
-      operationId: get-subscriptions
+      operationId: subscriptionsGet
   /account:
     get:
+      x-eov-operation-handler: accountRoute
+      operationId: accountGet
       summary: Your GET endpoint
       tags: []
       responses:
@@ -70,9 +75,9 @@ paths:
                 $ref: '#/components/schemas/account'
         '401':
           description: Unauthorized
-      operationId: get-account
   /login:
-    get:
+    post:
+      x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
       tags: []
       responses:
@@ -84,7 +89,7 @@ paths:
                 $ref: '#/components/schemas/loginResponse'
         '401':
           description: Unauthorized
-      operationId: get-login
+      operationId: loginPost
       requestBody:
         content:
           application/json:
@@ -183,15 +188,5 @@ components:
       properties:
         token:
           type: string
-  securitySchemes:
-    oauth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: ''
-          refreshUrl: ''
-          scopes: {}
 tags:
   - name: country
-security:
-  - API Key - 1: []
