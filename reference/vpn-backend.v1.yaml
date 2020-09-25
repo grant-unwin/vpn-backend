@@ -32,6 +32,12 @@ paths:
       x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
       tags: []
+      operationId: registerPost
+      security: []
+      description: get account''
+    post:
+      summary: ''
+      operationId: registerPost
       responses:
         '200':
           description: OK
@@ -40,14 +46,11 @@ paths:
               schema:
                 type: object
                 properties: {}
-      operationId: registerPost
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/register'
-      security: []
-      description: get account''
   /subscriptions:
     get:
       x-eov-operation-handler: accountRoute
