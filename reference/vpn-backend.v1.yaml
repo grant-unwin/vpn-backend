@@ -7,7 +7,7 @@ info:
     email: grant@grantunw.in
   description: VPN app backend
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'https://vpn-backend-express.azurewebsites.net'
 paths:
   /countries:
     get:
@@ -32,8 +32,9 @@ paths:
       x-eov-operation-handler: accountRoute
       summary: ''
       operationId: registerPost
-      description: 'adasd'
-      tags: []
+      description: adasd
+      tags:
+        - auth
       responses:
         '200':
           description: OK
@@ -51,8 +52,9 @@ paths:
     get:
       x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
-      tags: []
-      description: 'sd'
+      tags:
+        - account
+      description: sd
       responses:
         '200':
           description: OK
@@ -70,7 +72,7 @@ paths:
       x-eov-operation-handler: accountRoute
       operationId: accountGet
       summary: Your GET endpoint
-      description: 'da'
+      description: da
       tags: []
       responses:
         '200':
@@ -85,8 +87,9 @@ paths:
     post:
       x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
-      tags: []
-      description: 'da'
+      tags:
+        - auth
+      description: da
       responses:
         '200':
           description: OK
@@ -96,6 +99,10 @@ paths:
                 $ref: '#/components/schemas/loginResponse'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponse'
       operationId: loginPost
       requestBody:
         content:
@@ -195,5 +202,20 @@ components:
       properties:
         token:
           type: string
+    errorResponse:
+      title: errorResponse
+      type: object
+      properties:
+        status:
+          type: string
+        mesage:
+          type: string
+      x-examples:
+        Bad Login:
+          status: error
+          mesage: Incorrect username and password combination
+      description: General Error Response
 tags:
   - name: country
+  - name: auth
+  - name: account
