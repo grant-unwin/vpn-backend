@@ -28,16 +28,12 @@ paths:
       description: Get a list of countries available
       security: []
   /register:
-    get:
-      x-eov-operation-handler: accountRoute
-      summary: Your GET endpoint
-      tags: []
-      operationId: registerPost
-      security: []
-      description: get account''
     post:
+      x-eov-operation-handler: accountRoute
       summary: ''
       operationId: registerPost
+      description: 'adasd'
+      tags: []
       responses:
         '200':
           description: OK
@@ -56,6 +52,7 @@ paths:
       x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
       tags: []
+      description: 'sd'
       responses:
         '200':
           description: OK
@@ -73,6 +70,7 @@ paths:
       x-eov-operation-handler: accountRoute
       operationId: accountGet
       summary: Your GET endpoint
+      description: 'da'
       tags: []
       responses:
         '200':
@@ -88,6 +86,7 @@ paths:
       x-eov-operation-handler: accountRoute
       summary: Your GET endpoint
       tags: []
+      description: 'da'
       responses:
         '200':
           description: OK
