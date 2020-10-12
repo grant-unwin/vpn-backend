@@ -73,7 +73,8 @@ paths:
       operationId: accountGet
       summary: getAccount
       description: da
-      tags: []
+      tags:
+        - account
       responses:
         '200':
           description: OK
