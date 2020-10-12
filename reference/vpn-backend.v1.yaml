@@ -130,6 +130,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/city'
+      required:
+        - id
+        - name
+        - icon
+        - cities
     server:
       title: server
       type: object
@@ -173,6 +178,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/server'
+      required:
+        - id
+        - name
+        - servers
     register:
       title: register
       type: object
@@ -181,6 +190,9 @@ components:
           type: string
         password:
           type: string
+      required:
+        - email
+        - password
     subscription:
       title: subscription
       type: object
@@ -201,6 +213,11 @@ components:
       properties:
         subscribed:
           type: boolean
+        email:
+          type: string
+      required:
+        - subscribed
+        - email
     login:
       title: login
       type: object
@@ -209,25 +226,33 @@ components:
           type: string
         password:
           type: string
+      required:
+        - email
+        - password
     loginResponse:
       title: loginResponse
       type: object
       properties:
         token:
           type: string
+      required:
+        - token
     errorResponse:
       title: errorResponse
       type: object
-      properties:
-        status:
-          type: string
-        mesage:
-          type: string
       x-examples:
         Bad Login:
           status: error
           mesage: Incorrect username and password combination
       description: General Error Response
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      required:
+        - status
+        - message
 tags:
   - name: country
   - name: auth
