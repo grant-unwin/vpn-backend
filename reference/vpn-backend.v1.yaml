@@ -12,7 +12,7 @@ paths:
   /countries:
     get:
       x-eov-operation-handler: countriesRoute
-      summary: Your GET endpoint
+      summary: getCountries
       tags:
         - country
       responses:
@@ -30,7 +30,7 @@ paths:
   /register:
     post:
       x-eov-operation-handler: accountRoute
-      summary: ''
+      summary: postRegister
       operationId: registerPost
       description: adasd
       tags:
@@ -51,7 +51,7 @@ paths:
   /subscriptions:
     get:
       x-eov-operation-handler: accountRoute
-      summary: Your GET endpoint
+      summary: getSubscriptions
       tags:
         - account
       description: sd
@@ -71,7 +71,7 @@ paths:
     get:
       x-eov-operation-handler: accountRoute
       operationId: accountGet
-      summary: Your GET endpoint
+      summary: getAccount
       description: da
       tags: []
       responses:
@@ -86,7 +86,7 @@ paths:
   /login:
     post:
       x-eov-operation-handler: accountRoute
-      summary: Your GET endpoint
+      summary: postLogin
       tags:
         - auth
       description: da
