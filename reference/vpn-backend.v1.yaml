@@ -133,15 +133,17 @@ components:
     server:
       title: server
       type: object
+      x-examples:
+        server 1:
+          id: 1
+          address: 1.1.1.1
+          protocols: ipsec
+          username: vpnuser
+          password: password
+          ipSecPsk: sharedKey
       properties:
         id:
           type: integer
-        country:
-          type: integer
-          format: int32
-          example: 1
-          minimum: 0
-          multipleOf: 1
         address:
           type: string
         protocols:
@@ -149,6 +151,16 @@ components:
           enum:
             - ipsec
             - openvpn
+        username:
+          type: string
+        password:
+          type: string
+        ipSecPsk:
+          type: string
+        name:
+          type: string
+        '':
+          type: string
     city:
       title: city
       type: object
