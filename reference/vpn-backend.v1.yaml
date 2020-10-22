@@ -66,9 +66,9 @@ paths:
                   $ref: '#/components/schemas/subscription'
         '401':
           description: Unauthorized
-      security:
-        - oauth2:
-            - openid
+          security:
+            - oauth2:
+                - openid
       operationId: subscriptionsGet
   /account:
     get:
@@ -116,6 +116,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/login'
+  /subscription/android:
+    parameters: []
+    post:
+      x-eov-operation-handler: subscriptionAndroidRoute
+      description: Report a new android IAP subscription
+      summary: postSubscriptionAndroid
+      operationId: post-subscription-android
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/androidSubscription'
+      tags:
+        - subscription
 components:
   schemas:
     country:
@@ -265,6 +284,21 @@ components:
       required:
         - status
         - message
+    androidSubscription:
+      title: androidSubscription
+      type: object
+      properties:
+        packageName:
+          type: string
+        subscriptionId:
+          type: string
+        token:
+          type: string
+      required:
+        - packageName
+        - subscriptionId
+        - token
+      description: ''
   securitySchemes:
     oauth2:
       type: oauth2
@@ -282,3 +316,4 @@ tags:
   - name: country
   - name: auth
   - name: account
+  - name: subscription
