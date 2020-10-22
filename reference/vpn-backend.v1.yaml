@@ -125,10 +125,10 @@ paths:
   /subscription/android:
     parameters: []
     post:
-      x-eov-operation-handler: subscriptionAndroidRoute
+      x-eov-operation-handler: subscriptionRoute
       description: Report a new android IAP subscription
       summary: postSubscriptionAndroid
-      operationId: post-subscription-android
+      operationId: androidSubscriptionPost
       responses:
         '200':
           description: OK
