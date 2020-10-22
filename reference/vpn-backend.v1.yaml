@@ -66,6 +66,9 @@ paths:
                   $ref: '#/components/schemas/subscription'
         '401':
           description: Unauthorized
+      security:
+        - oauth2:
+            - openid
       operationId: subscriptionsGet
   /account:
     get:
@@ -267,8 +270,8 @@ components:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: 'https://guvpn.auth.eu-west-2.amazoncognito.com/oauth2/authorize?'
-          refreshUrl: 'https://guvpn.auth.eu-west-2.amazoncognito.com/oauth2/authorize?'
+          authorizationUrl: 'https://guvpn.auth.eu-west-2.amazoncognito.com/oauth2/authorize?&client_id=chsornstdm0tkj3q3lag3ee8o'
+          refreshUrl: 'https://guvpn.auth.eu-west-2.amazoncognito.com/oauth2/authorize?&client_id=chsornstdm0tkj3q3lag3ee8o'
           scopes:
             phone: phone
             email: email
