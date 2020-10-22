@@ -66,10 +66,13 @@ paths:
                   $ref: '#/components/schemas/subscription'
         '401':
           description: Unauthorized
-          security:
-            - oauth2:
-                - openid
       operationId: subscriptionsGet
+      security:
+        - oauth2:
+            - phone
+            - email
+            - openid
+            - profile
   /account:
     get:
       x-eov-operation-handler: accountRoute
@@ -90,6 +93,9 @@ paths:
       security:
         - oauth2:
             - openid
+            - phone
+            - email
+            - profile
   /login:
     post:
       x-eov-operation-handler: accountRoute
@@ -135,6 +141,12 @@ paths:
               $ref: '#/components/schemas/androidSubscription'
       tags:
         - subscription
+      security:
+        - oauth2:
+            - phone
+            - email
+            - openid
+            - profile
 components:
   schemas:
     country:
