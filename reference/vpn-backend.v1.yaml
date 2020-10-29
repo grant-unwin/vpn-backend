@@ -127,7 +127,7 @@ paths:
     post:
       x-eov-operation-handler: subscriptionRoute
       description: Report a new android IAP subscription
-      summary: postSubscriptionAndroid
+      summary: androidSubscriptionPost
       operationId: androidSubscriptionPost
       responses:
         '200':
@@ -150,7 +150,7 @@ paths:
   /subscription/stripe:
     post:
       x-eov-operation-handler: subscriptionRoute
-      summary: ''
+      summary: stripeSubscriptionPost
       operationId: stripeSubscriptionPost
       responses:
         '200':
@@ -337,9 +337,11 @@ components:
         stripePaymentMethodId:
           type: string
         productId:
-          type: string
-        '':
-          type: string
+          type: number
+        channelId:
+          type: number
+        currencyId:
+          type: number
   securitySchemes:
     oauth2:
       type: oauth2
