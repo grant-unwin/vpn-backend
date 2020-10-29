@@ -147,6 +147,25 @@ paths:
             - email
             - openid
             - profile
+  /subscription/stripe:
+    post:
+      x-eov-operation-handler: subscriptionRoute
+      summary: ''
+      operationId: stripeSubscriptionPost
+      responses:
+        '200':
+          description: OK
+      security:
+        - oauth2:
+            - profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stripeSubscription'
+      description: 'Post the product and stripe payment method Id, that API will attempt to create the subscription for the current logged in user, and charge the payment method if necessary.'
+      tags:
+        - subscription
 components:
   schemas:
     country:
@@ -311,6 +330,16 @@ components:
         - subscriptionId
         - token
       description: ''
+    stripeSubscription:
+      title: stripeSubscription
+      type: object
+      properties:
+        stripePaymentMethodId:
+          type: string
+        productId:
+          type: string
+        '':
+          type: string
   securitySchemes:
     oauth2:
       type: oauth2
