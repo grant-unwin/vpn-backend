@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "types": "dist/indexd.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "clean:apimodels": "npx rimraf types",
-      "gen:apimodels": "npx openapi-typescript-codegen --input ./reference/vpn-backend.v1.yaml -o ./types/ --exportCore false --exportServices false --exportSchemas false",
-      "build": "run-s clean:apimodels gen:apimodels"
+    "build": "run-s clean:dist clean:api gen:api compile",
+    "clean:api": "rimraf api",
+    "clean:dist": "rimraf dist",
+    "compile": "tsc -p tsconfig.json",
+    "gen:api": "openapi-generator-cli generate -g typescript-axios -i ./reference/vpn-backend.v1.yaml -o ./api/ -a oauth2"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,13 @@
   },
   "homepage": "https://github.com/grant-unwin/vpn-backend#readme",
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "typescript": "3.8.3"
+  },
+  "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.0.3",
+    "rimraf": "^3.0.2",
+    "tsc": "^1.20150623.0",
+    "url": "^0.11.0"
   }
 }
