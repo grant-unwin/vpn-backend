@@ -5,9 +5,28 @@ info:
   contact:
     name: Grant Unwin
     email: grant@grantunw.in
-  description: VPN app backend
+    url: 'http://www.grantunw.in'
+  description: |-
+    Backend API for FastVPN.
+
+     ***Onboarding***
+     
+    * Register and Login
+    * List Product
+    * Create subscriptions
+
+    ***VPN***
+
+    * List countries/servers/config
+     
+     
+  license:
+    name: No Licence
 servers:
   - url: 'http://vpn-backend-express.azurewebsites.net'
+    description: Staging
+  - url: 'http://localhost'
+    description: Local
 paths:
   /countries:
     get:
