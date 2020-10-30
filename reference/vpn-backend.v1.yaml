@@ -194,6 +194,10 @@ paths:
       parameters:
         - schema:
             type: string
+            enum:
+              - GBP
+              - USD
+              - EUR
           in: query
           name: currencyCode
         - schema:
