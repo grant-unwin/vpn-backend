@@ -182,15 +182,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/product'
       operationId: productsGet
-      requestBody:
-        content:
-          application/json:
-            schema: {}
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-        description: 'get products  '
       parameters:
         - schema:
             type: string
