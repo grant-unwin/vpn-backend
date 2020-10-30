@@ -199,9 +199,9 @@ paths:
         - schema:
             type: string
             enum:
-              - website
-              - ios
-              - android
+              - Website
+              - AppIos
+              - AppAndroid
           in: query
           name: channel
       description: get products
