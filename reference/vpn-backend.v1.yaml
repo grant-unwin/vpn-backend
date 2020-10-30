@@ -323,9 +323,10 @@ components:
       type: object
       x-tags:
         - subscription
+      description: ''
       properties:
         id:
-          type: string
+          type: number
         startDate:
           type: string
         endDate:
@@ -334,11 +335,21 @@ components:
           type: boolean
         product:
           $ref: '#/components/schemas/productResponseModel'
+        price:
+          type: number
+        currencyCode:
+          type: string
+        channelName:
+          type: string
       required:
         - id
         - startDate
         - endDate
         - active
+        - product
+        - price
+        - currencyCode
+        - channelName
     accountResponseModel:
       title: account
       type: object
@@ -447,6 +458,8 @@ components:
     productResponseModel:
       title: product
       type: object
+      x-tags:
+        - product
       properties:
         id:
           type: number
@@ -472,8 +485,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/priceResponseModel'
-      x-tags:
-        - product
+      required:
+        - id
+        - name
+        - durationDays
+        - durationMonths
+        - durationYears
+        - trialDays
+        - trialMonths
+        - trialYears
+        - discountPecentage
+        - trialDiscountPercentage
+        - prices
   securitySchemes:
     oauth2:
       type: oauth2
