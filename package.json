@@ -1,6 +1,6 @@
 {
   "name": "vpn-backend-types",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,8 @@
     "clean:api": "rimraf api",
     "clean:dist": "rimraf dist",
     "compile": "tsc -p tsconfig.json",
-    "gen:api": "openapi-generator-cli generate -g typescript-axios -i ./reference/vpn-backend.v1.yaml -o ./api/ -a oauth2"
+    "gen:api": "openapi-generator-cli generate -g typescript-axios -i ./reference/vpn-backend.v1.yaml -o ./api/ -a oauth2",
+    "package:version": "npx npe version"
   },
   "repository": {
     "type": "git",
