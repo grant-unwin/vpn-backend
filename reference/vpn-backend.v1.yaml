@@ -5,14 +5,33 @@ info:
   contact:
     name: Grant Unwin
     email: grant@grantunw.in
-  description: VPN app backend
+    url: 'http://www.grantunw.in'
+  description: |-
+    Backend API for FastVPN.
+
+     ***Onboarding***
+     
+    * Register and Login
+    * List Product
+    * Create subscriptions
+
+    ***VPN***
+
+    * List countries/servers/config
+     
+     
+  license:
+    name: No Licence
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://vpn-backend-express.azurewebsites.net'
+    description: Staging
+  - url: 'http://localhost'
+    description: Local
 paths:
   /countries:
     get:
       x-eov-operation-handler: countriesRoute
-      summary: Your GET endpoint
+      summary: getCountries
       tags:
         - country
       responses:
@@ -23,21 +42,18 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/country'
+                  $ref: '#/components/schemas/countryResponseModel'
       operationId: countriesGet
       description: Get a list of countries available
       security: []
   /register:
-    get:
-      x-eov-operation-handler: accountRoute
-      summary: Your GET endpoint
-      tags: []
-      operationId: registerPost
-      security: []
-      description: get account''
     post:
-      summary: ''
+      x-eov-operation-handler: accountRoute
+      summary: postRegister
       operationId: registerPost
+      description: adasd
+      tags:
+        - auth
       responses:
         '200':
           description: OK
@@ -50,12 +66,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/register'
+              $ref: '#/components/schemas/registerRequestModel'
   /subscriptions:
     get:
       x-eov-operation-handler: accountRoute
-      summary: Your GET endpoint
-      tags: []
+      summary: getSubscriptions
+      tags:
+        - account
+      description: sd
       responses:
         '200':
           description: OK
@@ -64,48 +82,147 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/subscription'
+                  $ref: '#/components/schemas/subscriptionResponseModel'
         '401':
           description: Unauthorized
       operationId: subscriptionsGet
+      security:
+        - oauth2:
+            - phone
+            - email
+            - openid
+            - profile
   /account:
     get:
       x-eov-operation-handler: accountRoute
       operationId: accountGet
-      summary: Your GET endpoint
-      tags: []
+      summary: getAccount
+      description: da
+      tags:
+        - account
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/account'
+                $ref: '#/components/schemas/accountResponseModel'
         '401':
           description: Unauthorized
+      security:
+        - oauth2:
+            - openid
+            - phone
+            - email
+            - profile
   /login:
     post:
       x-eov-operation-handler: accountRoute
-      summary: Your GET endpoint
-      tags: []
+      summary: postLogin
+      tags:
+        - auth
+      description: da
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/loginResponse'
+                $ref: '#/components/schemas/loginResponseModel'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorResponseModel'
       operationId: loginPost
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/login'
+              $ref: '#/components/schemas/loginRequestModel'
+  /subscription/android:
+    parameters: []
+    post:
+      x-eov-operation-handler: subscriptionRoute
+      description: Report a new android IAP subscription
+      summary: androidSubscriptionPost
+      operationId: androidSubscriptionPost
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/androidSubscriptionRequestModel'
+      tags:
+        - subscription
+      security:
+        - oauth2:
+            - phone
+            - email
+            - openid
+            - profile
+  /subscription/stripe:
+    post:
+      x-eov-operation-handler: subscriptionRoute
+      summary: stripeSubscriptionPost
+      operationId: stripeSubscriptionPost
+      responses:
+        '200':
+          description: OK
+      security:
+        - oauth2:
+            - profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/stripeSubscriptionRequestModel'
+      description: 'Post the product and stripe payment method Id, that API will attempt to create the subscription for the current logged in user, and charge the payment method if necessary.'
+      tags:
+        - subscription
+  /product:
+    get:
+      x-eov-operation-handler: productRoute
+      summary: getProducts
+      tags:
+        - product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/productResponseModel'
+      operationId: productsGet
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - GBP
+              - USD
+              - EUR
+          in: query
+          name: currencyCode
+        - schema:
+            type: string
+            enum:
+              - Website
+              - AppIos
+              - AppAndroid
+          in: query
+          name: channel
+      description: get products
+    parameters: []
 components:
   schemas:
-    country:
+    countryResponseModel:
       title: country
       type: object
       x-examples:
@@ -122,19 +239,28 @@ components:
         cities:
           type: array
           items:
-            $ref: '#/components/schemas/city'
-    server:
+            $ref: '#/components/schemas/cityResponseModel'
+      required:
+        - id
+        - name
+        - icon
+        - cities
+      x-tags:
+        - account
+    serverResponseModel:
       title: server
       type: object
+      x-examples:
+        server 1:
+          id: 1
+          address: 1.1.1.1
+          protocols: ipsec
+          username: vpnuser
+          password: password
+          ipSecPsk: sharedKey
       properties:
         id:
           type: integer
-        country:
-          type: integer
-          format: int32
-          example: 1
-          minimum: 0
-          multipleOf: 1
         address:
           type: string
         protocols:
@@ -142,7 +268,26 @@ components:
           enum:
             - ipsec
             - openvpn
-    city:
+        username:
+          type: string
+        password:
+          type: string
+        ipSecPsk:
+          type: string
+        caCert:
+          type: string
+        clientCert:
+          type: string
+        certAlias:
+          type: string
+        certPassword:
+          type: string
+        name:
+          type: string
+      x-tags:
+        - country
+        - server
+    cityResponseModel:
       title: city
       type: object
       properties:
@@ -153,8 +298,14 @@ components:
         servers:
           type: array
           items:
-            $ref: '#/components/schemas/server'
-    register:
+            $ref: '#/components/schemas/serverResponseModel'
+      required:
+        - id
+        - name
+        - servers
+      x-tags:
+        - account
+    registerRequestModel:
       title: register
       type: object
       properties:
@@ -162,27 +313,46 @@ components:
           type: string
         password:
           type: string
-    subscription:
+      required:
+        - email
+        - password
+      x-tags:
+        - account
+    subscriptionResponseModel:
       title: subscription
       type: object
+      x-tags:
+        - subscription
       properties:
         id:
           type: string
-        name:
+        startDate:
           type: string
-        price:
+        endDate:
           type: string
-        oldPrice:
-          type: string
-        description:
-          type: string
-    account:
+        active:
+          type: boolean
+        product:
+          $ref: '#/components/schemas/productResponseModel'
+      required:
+        - id
+        - startDate
+        - endDate
+        - active
+    accountResponseModel:
       title: account
       type: object
       properties:
         subscribed:
           type: boolean
-    login:
+        email:
+          type: string
+      required:
+        - subscribed
+        - email
+      x-tags:
+        - account
+    loginRequestModel:
       title: login
       type: object
       properties:
@@ -190,11 +360,136 @@ components:
           type: string
         password:
           type: string
-    loginResponse:
+      required:
+        - email
+        - password
+      x-tags:
+        - account
+    loginResponseModel:
       title: loginResponse
       type: object
       properties:
         token:
           type: string
+      required:
+        - token
+      x-tags:
+        - account
+    errorResponseModel:
+      title: errorResponse
+      type: object
+      x-examples:
+        Bad Login:
+          status: error
+          mesage: Incorrect username and password combination
+      description: General Error Response
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      required:
+        - status
+        - message
+      x-tags:
+        - general
+    androidSubscriptionRequestModel:
+      title: androidSubscription
+      type: object
+      properties:
+        packageName:
+          type: string
+        subscriptionId:
+          type: string
+        token:
+          type: string
+      required:
+        - packageName
+        - subscriptionId
+        - token
+      description: ''
+      x-tags:
+        - subscription
+    stripeSubscriptionRequestModel:
+      title: stripeSubscription
+      type: object
+      properties:
+        stripePaymentMethodId:
+          type: string
+        productId:
+          type: number
+        channelId:
+          type: number
+        currencyId:
+          type: number
+      x-tags:
+        - subscription
+    priceResponseModel:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        amount:
+          type: number
+        channel:
+          type: string
+        currencyCode:
+          type: string
+      required:
+        - id
+        - amount
+        - channel
+        - currencyCode
+      title: price
+      x-tags:
+        - product
+    productResponseModel:
+      title: product
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        durationDays:
+          type: number
+        durationMonths:
+          type: number
+        durationYears:
+          type: number
+        trialDays:
+          type: number
+        trialMonths:
+          type: number
+        trialYears:
+          type: number
+        discountPecentage:
+          type: number
+        trialDiscountPercentage:
+          type: number
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceResponseModel'
+      x-tags:
+        - product
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'https://guvpn.auth.eu-west-2.amazoncognito.com/oauth2/authorize?&client_id=chsornstdm0tkj3q3lag3ee8o'
+          refreshUrl: 'https://guvpn.auth.eu-west-2.amazoncognito.com/oauth2/authorize?&client_id=chsornstdm0tkj3q3lag3ee8o'
+          scopes:
+            phone: phone
+            email: email
+            openid: openid
+            profile: profile
+            aws.cognito.signin.user.admin: aws.cognito.signin.user.admin
 tags:
   - name: country
+  - name: auth
+  - name: account
+  - name: subscription
+  - name: product
