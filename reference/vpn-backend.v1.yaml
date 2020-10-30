@@ -409,21 +409,21 @@ components:
         name:
           type: string
         durationDays:
-          type: string
+          type: number
         durationMonths:
-          type: string
+          type: number
         durationYears:
-          type: string
+          type: number
         trialDays:
-          type: string
+          type: number
         trialMonths:
-          type: string
+          type: number
         trialYears:
-          type: string
+          type: number
         discountPecentage:
-          type: string
+          type: number
         trialDiscountPercentage:
-          type: string
+          type: number
         prices:
           type: array
           items:
