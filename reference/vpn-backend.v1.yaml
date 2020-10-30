@@ -334,6 +334,12 @@ components:
           type: boolean
         product:
           $ref: '#/components/schemas/productResponseModel'
+        price:
+          type: number
+        currencyCode:
+          type: string
+        channelName:
+          type: string
       required:
         - id
         - startDate
