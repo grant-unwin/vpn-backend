@@ -166,6 +166,46 @@ paths:
       description: 'Post the product and stripe payment method Id, that API will attempt to create the subscription for the current logged in user, and charge the payment method if necessary.'
       tags:
         - subscription
+  /product:
+    get:
+      x-eov-operation-handler: productRoute
+      summary: getProducts
+      tags:
+        - product
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/product'
+      operationId: productsGet
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+        description: 'get products  '
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: currencyCode
+        - schema:
+            type: string
+            enum:
+              - website
+              - ios
+              - android
+          in: query
+          name: channel
+      description: get products
+    parameters: []
 components:
   schemas:
     country:
@@ -342,6 +382,52 @@ components:
           type: number
         currencyId:
           type: number
+    price:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        amount:
+          type: number
+        channel:
+          type: string
+        currencyCode:
+          type: string
+      required:
+        - id
+        - amount
+        - channel
+        - currencyCode
+      title: price
+    product:
+      title: product
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        durationDays:
+          type: string
+        durationMonths:
+          type: string
+        durationYears:
+          type: string
+        trialDays:
+          type: string
+        trialMonths:
+          type: string
+        trialYears:
+          type: string
+        discountPecentage:
+          type: string
+        trialDiscountPercentage:
+          type: string
+        prices:
+          type: array
+          items:
+            $ref: '#/components/schemas/price'
   securitySchemes:
     oauth2:
       type: oauth2
@@ -360,3 +446,4 @@ tags:
   - name: auth
   - name: account
   - name: subscription
+  - name: product
