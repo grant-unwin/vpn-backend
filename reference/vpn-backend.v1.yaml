@@ -226,6 +226,8 @@ components:
         - name
         - icon
         - cities
+      x-tags:
+        - account
     server:
       title: server
       type: object
@@ -263,6 +265,9 @@ components:
           type: string
         name:
           type: string
+      x-tags:
+        - country
+        - server
     city:
       title: city
       type: object
@@ -279,6 +284,8 @@ components:
         - id
         - name
         - servers
+      x-tags:
+        - account
     register:
       title: register
       type: object
@@ -290,6 +297,8 @@ components:
       required:
         - email
         - password
+      x-tags:
+        - account
     subscription:
       title: subscription
       type: object
@@ -304,6 +313,8 @@ components:
           type: string
         description:
           type: string
+      x-tags:
+        - subscription
     account:
       title: account
       type: object
@@ -315,6 +326,8 @@ components:
       required:
         - subscribed
         - email
+      x-tags:
+        - account
     login:
       title: login
       type: object
@@ -326,6 +339,8 @@ components:
       required:
         - email
         - password
+      x-tags:
+        - account
     loginResponse:
       title: loginResponse
       type: object
@@ -334,6 +349,8 @@ components:
           type: string
       required:
         - token
+      x-tags:
+        - account
     errorResponse:
       title: errorResponse
       type: object
@@ -350,6 +367,8 @@ components:
       required:
         - status
         - message
+      x-tags:
+        - general
     androidSubscription:
       title: androidSubscription
       type: object
@@ -365,6 +384,8 @@ components:
         - subscriptionId
         - token
       description: ''
+      x-tags:
+        - subscription
     stripeSubscription:
       title: stripeSubscription
       type: object
@@ -377,6 +398,8 @@ components:
           type: number
         currencyId:
           type: number
+      x-tags:
+        - subscription
     price:
       description: ''
       type: object
@@ -395,6 +418,8 @@ components:
         - channel
         - currencyCode
       title: price
+      x-tags:
+        - product
     product:
       title: product
       type: object
@@ -423,6 +448,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/price'
+      x-tags:
+        - product
   securitySchemes:
     oauth2:
       type: oauth2
