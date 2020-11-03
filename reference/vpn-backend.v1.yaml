@@ -344,7 +344,6 @@ components:
       required:
         - id
         - startDate
-        - endDate
         - active
         - product
         - price
