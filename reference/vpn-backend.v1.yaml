@@ -220,6 +220,27 @@ paths:
           name: channel
       description: get products
     parameters: []
+  /account/payments:
+    get:
+      x-eov-operation-handler: accountRoute
+      summary: getAccountPayments
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentResponseModel'
+      operationId: accountPaymentsGet
+      security:
+        - oauth2:
+            - phone
+            - email
+            - openid
+            - profile
+            - aws.cognito.signin.user.admin
+      description: accountPaymentsGet
 components:
   schemas:
     countryResponseModel:
@@ -496,6 +517,41 @@ components:
         - discountPecentage
         - trialDiscountPercentage
         - prices
+    paymentResponseModel:
+      description: ''
+      type: object
+      properties:
+        id:
+          type: number
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+          minLength: 1
+        product:
+          type: string
+          minLength: 1
+        paymentMethod:
+          type: string
+          minLength: 1
+          enum:
+            - stripe
+            - android
+        status:
+          type: string
+          minLength: 1
+          enum:
+            - pending
+            - success
+            - failed
+      required:
+        - id
+        - amount
+        - currency
+        - product
+        - paymentMethod
+        - status
   securitySchemes:
     oauth2:
       type: oauth2
