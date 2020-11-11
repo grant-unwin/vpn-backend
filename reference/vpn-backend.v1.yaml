@@ -232,7 +232,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/paymentResponseModel'
+                type: array
+                items:
+                  $ref: '#/components/schemas/paymentResponseModel'
       operationId: accountPaymentsGet
       security:
         - oauth2:
