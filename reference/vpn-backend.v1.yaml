@@ -545,6 +545,8 @@ components:
             - pending
             - success
             - failed
+        date:
+          type: string
       required:
         - id
         - amount
@@ -552,6 +554,8 @@ components:
         - product
         - paymentMethod
         - status
+        - date
+      title: ''
   securitySchemes:
     oauth2:
       type: oauth2
