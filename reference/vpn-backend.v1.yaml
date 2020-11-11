@@ -224,7 +224,8 @@ paths:
     get:
       x-eov-operation-handler: accountRoute
       summary: getAccountPayments
-      tags: []
+      tags:
+        - account
       responses:
         '200':
           description: OK
